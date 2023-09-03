@@ -5,10 +5,10 @@ import 'package:finance_tracker/features/add_finance/widgets/list_item.dart';
 import 'package:finance_tracker/theme/pallete.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import '../../../core/commons/custom_button.dart';
 import '../../../core/commons/custom_textformfield.dart';
+import '../../../core/constants/loader.dart';
 
 class AddFinanceScreen extends ConsumerStatefulWidget {
   const AddFinanceScreen({super.key});
@@ -162,7 +162,9 @@ class _AddFinanceScreenState extends ConsumerState<AddFinanceScreen> {
                         value!,
                         //DateTime.pars(dateController.text),
                       ),
-                      text: 'Add Transaction',
+                      child: isLoading
+                          ? const Loader()
+                          : const Text('Add Transaction'),
                     ),
                   ],
                 )

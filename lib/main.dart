@@ -1,5 +1,6 @@
 import 'package:finance_tracker/features/auth/repository/auth_repository.dart';
 import 'package:finance_tracker/firebase_options.dart';
+import 'package:finance_tracker/theme/pallete.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:finance_tracker/features/auth/screens/sign_up_screen.dart';
@@ -29,10 +30,7 @@ class _MyAppState extends ConsumerState<MyApp> {
           return MaterialApp(
             title: 'Finance Tracker',
             debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
-              useMaterial3: true,
-            ),
+            theme: ref.watch(themeNotifierProvider),
             routes: {
               HomeScreen.routeName: (context) => const HomeScreen(),
               SignUpScreen.routeName: (context) => const SignUpScreen(),

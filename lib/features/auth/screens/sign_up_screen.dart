@@ -3,6 +3,8 @@ import 'package:finance_tracker/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/constants/loader.dart';
+import '../../../theme/pallete.dart';
 import '../controller/auth_controller.dart';
 
 class SignUpScreen extends ConsumerStatefulWidget {
@@ -25,6 +27,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(authControllerProvider);
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(
@@ -44,12 +47,15 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomButton(
-                  onPressed: () {
-                    signInWithGoogle(context, ref);
-                    navigateToHomeScreen(context);
-                    setState(() {});
-                  },
-                  text: 'Continue with Google',
+                  onPressed: () => signInWithGoogle(context, ref),
+                  text: isLoading
+                      ? const Loader()
+                      : const Text(
+                          'Continue with Google',
+                          style: TextStyle(
+                            color: Pallete.whiteColor,
+                          ),
+                        ),
                 ),
               ],
             ),
