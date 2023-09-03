@@ -1,6 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:finance_tracker/core/failure.dart';
+import 'package:finance_tracker/core/typedefs.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../../models/add_transaction.dart';
@@ -82,10 +85,17 @@ class ShowFinanceRepository {
     });
   }
 
-  setBudget(int price) async {
-    var id = const Uuid().v1();
-    Budget budget = Budget(id: id, price: price, createdAt: DateTime.now());
-    return await firestore.collection('budget').doc('1234').set(budget.toMap());
+  FutureVoid setBudget(int price) async {
+    try {
+      var id = const Uuid().v1();
+      Budget budget = Budget(id: id, price: price, createdAt: DateTime.now());
+      return right(
+          await firestore.collection('budget').doc('1234').set(budget.toMap()));
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
   }
 
   updateBudget(int price) async {

@@ -6,11 +6,13 @@ class UserModel {
   final String profilePic;
   final String uid;
   final bool isAuthenticated;
+  final int budget;
   UserModel({
     required this.name,
     required this.profilePic,
     required this.uid,
     required this.isAuthenticated,
+    required this.budget,
   });
 
   UserModel copyWith({
@@ -18,12 +20,14 @@ class UserModel {
     String? profilePic,
     String? uid,
     bool? isAuthenticated,
+    int? budget,
   }) {
     return UserModel(
       name: name ?? this.name,
       profilePic: profilePic ?? this.profilePic,
       uid: uid ?? this.uid,
       isAuthenticated: isAuthenticated ?? this.isAuthenticated,
+      budget: budget ?? this.budget,
     );
   }
 
@@ -33,6 +37,7 @@ class UserModel {
       'profilePic': profilePic,
       'uid': uid,
       'isAuthenticated': isAuthenticated,
+      'budget': budget,
     };
   }
 
@@ -42,6 +47,7 @@ class UserModel {
       profilePic: map['profilePic'] as String,
       uid: map['uid'] as String,
       isAuthenticated: map['isAuthenticated'] as bool,
+      budget: map['budget'] as int,
     );
   }
 
@@ -52,7 +58,7 @@ class UserModel {
 
   @override
   String toString() {
-    return 'UserModel(name: $name, profilePic: $profilePic, uid: $uid, isAuthenticated: $isAuthenticated)';
+    return 'UserModel(name: $name, profilePic: $profilePic, uid: $uid, isAuthenticated: $isAuthenticated, budget: $budget)';
   }
 
   @override
@@ -62,7 +68,8 @@ class UserModel {
     return other.name == name &&
         other.profilePic == profilePic &&
         other.uid == uid &&
-        other.isAuthenticated == isAuthenticated;
+        other.isAuthenticated == isAuthenticated &&
+        other.budget == budget;
   }
 
   @override
@@ -70,6 +77,7 @@ class UserModel {
     return name.hashCode ^
         profilePic.hashCode ^
         uid.hashCode ^
-        isAuthenticated.hashCode;
+        isAuthenticated.hashCode ^
+        budget.hashCode;
   }
 }

@@ -6,6 +6,8 @@ import '../../../core/utils.dart';
 import '../../../models/user_model.dart';
 import '../repository/auth_repository.dart';
 
+final userProvider = StateProvider<UserModel?>((ref) => null);
+
 final authControllerProvider = StateNotifierProvider<AuthController, bool>(
   (ref) => AuthController(
     authRepository: ref.watch(authRepositoryProvider),
@@ -33,12 +35,17 @@ class AuthController extends StateNotifier<bool> {
   Stream<User?> get authStateChanged => _authRepository.authStateChanged;
 
   void signInWithGoogle(BuildContext context) async {
+    state = true;
     final user = await _authRepository.signInWithGoogle();
-    user.fold((l) => showSnackBar(context, l.message), (r) => null);
+    state = false;
+    user.fold((l) => showSnackBar(context, l.message),
+        (r) => _ref.read(userProvider.notifier).update((state) => r));
   }
 
   googleSignOut(BuildContext context) async {
+    state = true;
     final user = await _authRepository.googleSignOut();
+    state = false;
     user.fold((l) => showSnackBar(context, l.message),
         (r) => showSnackBar(context, 'User Signed Out...'));
   }

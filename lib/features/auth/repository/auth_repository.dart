@@ -53,7 +53,7 @@ class AuthRepository {
       UserCredential userCredential =
           await _auth.signInWithCredential(credential);
 
-      late UserModel userModel;
+      UserModel userModel;
 
       if (userCredential.additionalUserInfo!.isNewUser) {
         userModel = UserModel(
@@ -61,12 +61,12 @@ class AuthRepository {
           profilePic: userCredential.user!.photoURL ?? '',
           uid: userCredential.user!.uid,
           isAuthenticated: true,
+          budget: 0,
         );
         await _users.doc(userCredential.user!.uid).set(userModel.toMap());
+      } else {
+        userModel = await getUserData().first;
       }
-      // else {
-      //   userModel = await getUserData(userCredential.user!.uid).first;
-      // }
       return right(userModel);
     } on FirebaseAuthException catch (e) {
       throw e.message!;
@@ -90,6 +90,12 @@ class AuthRepository {
   }
 
   FutureVoid googleSignOut() async {
-    return right(await _auth.signOut());
+    try {
+      return right(await _auth.signOut());
+    } on FirebaseException catch (e) {
+      throw e.message!;
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
   }
 }
