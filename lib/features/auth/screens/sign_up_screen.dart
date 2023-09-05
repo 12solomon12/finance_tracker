@@ -47,8 +47,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                 ),
                 const SizedBox(height: 10),
                 CustomButton(
-                  onPressed: () => signInWithGoogle(context, ref),
-                  text: isLoading
+                  onPressed: () {
+                    signInWithGoogle(context, ref);
+                    navigateToHomeScreen(context);
+                  },
+                  child: isLoading
                       ? const Loader()
                       : const Text(
                           'Continue with Google',

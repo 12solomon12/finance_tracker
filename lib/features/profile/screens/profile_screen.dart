@@ -1,5 +1,4 @@
 import 'package:finance_tracker/core/commons/custom_button.dart';
-import 'package:finance_tracker/core/commons/custom_textformfield.dart';
 import 'package:finance_tracker/core/constants/loader.dart';
 import 'package:finance_tracker/features/auth/controller/auth_controller.dart';
 import 'package:finance_tracker/features/auth/repository/auth_repository.dart';
@@ -92,7 +91,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ],
                   );
                 },
-                error: (error, trace) {},
+                error: (error, trace) {
+                  return Center(
+                    child: Text(error.toString()),
+                  );
+                },
                 loading: () => const Loader())
 
             // Column(

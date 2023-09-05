@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_tracker/core/failure.dart';
 import 'package:finance_tracker/core/typedefs.dart';
 import 'package:finance_tracker/models/add_transaction.dart';
-import 'package:finance_tracker/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';

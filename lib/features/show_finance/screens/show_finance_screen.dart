@@ -1,5 +1,6 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:finance_tracker/core/commons/custom_button.dart';
+import 'package:finance_tracker/core/constants/loader.dart';
 import 'package:finance_tracker/features/show_finance/controller/show_finance_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -34,13 +35,14 @@ class _ShowFinanceScreenState extends ConsumerState<ShowFinanceScreen>
     Navigator.pushNamed(context, ProfileScreen.routeName);
   }
 
-  setBudgetMoney() {
-    ref
-        .read(showFinanceControllerProvider)
-        .setBudget(int.parse(budgetController.text.toString()));
-  }
+  // setBudgetMoney() {
+  //   ref
+  //       .read(showFinanceControllerProvider.notifier)
+  //       .setBudget(context, int.parse(budgetController.text.toString()));
+  // }
 
   setBudget() {
+    final isLoading = ref.watch(showFinanceControllerProvider);
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -90,10 +92,14 @@ class _ShowFinanceScreenState extends ConsumerState<ShowFinanceScreen>
                       children: [
                         CustomButton(
                           onPressed: () {
-                            setBudgetMoney();
+                            //  setBudgetMoney();
                           },
-                          text: 'Set Budget',
                           color: Pallete.blueColor,
+                          child: isLoading
+                              ? const Loader()
+                              : const Text(
+                                  'Set Budget',
+                                ),
                         ),
                       ],
                     ),

@@ -37,8 +37,8 @@ class _AddFinanceScreenState extends ConsumerState<AddFinanceScreen> {
 
   addFinanceTransaction(int price, String expense, String note, String date) {
     ref
-        .read(addFinanceControllerProvider)
-        .addtransaction(price, expense, date, note);
+        .watch(addFinanceControllerProvider.notifier)
+        .addtransaction(context, price, expense, date, note);
   }
 
   @override
@@ -52,6 +52,8 @@ class _AddFinanceScreenState extends ConsumerState<AddFinanceScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isLoading = ref.watch(addFinanceControllerProvider);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: SafeArea(

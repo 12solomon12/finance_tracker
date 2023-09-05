@@ -2,9 +2,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finance_tracker/core/failure.dart';
 import 'package:finance_tracker/core/typedefs.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fpdart/fpdart.dart';
-import 'package:uuid/uuid.dart';
 
 import '../../../models/add_transaction.dart';
 import '../../../models/budget.dart';
@@ -20,14 +20,14 @@ final budgetCostProvider = StreamProvider((ref) {
 });
 
 final showFinanceRepositoryProvider = Provider((ref) {
-  return ShowFinanceRepository(firestore: FirebaseFirestore.instance);
+  return ShowFinanceRepository(
+      firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance);
 });
 
 class ShowFinanceRepository {
   final FirebaseFirestore firestore;
-  ShowFinanceRepository({
-    required this.firestore,
-  });
+  final FirebaseAuth auth;
+  ShowFinanceRepository({required this.firestore, required this.auth});
 
   Future<int> get totalCosts =>
       firestore.collection('transactions').where('price').get().then((value) {
@@ -87,10 +87,14 @@ class ShowFinanceRepository {
 
   FutureVoid setBudget(int price) async {
     try {
-      var id = const Uuid().v1();
-      Budget budget = Budget(id: id, price: price, createdAt: DateTime.now());
-      return right(
-          await firestore.collection('budget').doc('1234').set(budget.toMap()));
+      //var id = const Uuid().v1();
+      final budget = {'budget': price};
+
+      return right(await firestore
+          .collection('users')
+          .doc(auth.currentUser!.uid)
+          .update(budget));
+      //   await firestore.collection('budget').doc('1234').set(budget.toMap()));
     } on FirebaseException catch (e) {
       throw e.message!;
     } catch (e) {
