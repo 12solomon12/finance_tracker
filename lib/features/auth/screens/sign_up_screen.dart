@@ -42,7 +42,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               // mainAxisSize: MainAxisSize.min,
               children: [
                 Image.asset(
-                  'assets/images/person1.jpeg',
+                  'assets/images/finance.png',
                   height: 400,
                 ),
                 const SizedBox(height: 10),
