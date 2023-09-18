@@ -15,6 +15,11 @@ final authControllerProvider = StateNotifierProvider<AuthController, bool>(
   ),
 );
 
+final getUserDataProvider = StreamProvider((ref) {
+  final authController = ref.watch(authControllerProvider.notifier);
+  return authController.getUserData();
+});
+
 final authStateChangedProvider = StreamProvider((ref) {
   final authController = ref.watch(authControllerProvider.notifier);
   return authController.authStateChanged;

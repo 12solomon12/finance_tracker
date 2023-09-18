@@ -40,6 +40,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 data: (data) {
                   return Column(
                     children: [
+                      const Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                        child: Text(
+                          'Email and Name are displayed here',
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20.0),
                         child: Row(
@@ -58,17 +69,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         ),
                       ),
                       const SizedBox(height: 30),
-                      ListTile(
-                        title: const Text('Change Theme'),
-                        trailing: Switch.adaptive(
-                            value: ref
-                                        .watch(themeNotifierProvider.notifier)
-                                        .mode ==
-                                    ThemeMode.dark
-                                ? true
-                                : false,
-                            onChanged: (value) => toogleTheme(ref)),
-                      ),
+                      // ListTile(
+                      //   title: const Text('Change Theme'),
+                      //   trailing: Switch.adaptive(
+                      //       value: ref
+                      //                   .watch(themeNotifierProvider.notifier)
+                      //                   .mode ==
+                      //               ThemeMode.dark
+                      //           ? true
+                      //           : false,
+                      //       onChanged: (value) => toogleTheme(ref)),
+                      // ),
                       Expanded(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.end,

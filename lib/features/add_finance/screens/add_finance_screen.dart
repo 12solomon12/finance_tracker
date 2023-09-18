@@ -115,11 +115,15 @@ class _AddFinanceScreenState extends ConsumerState<AddFinanceScreen> {
                 // //     )
                 //     //  Theme.of(context).textTheme.bodySmall,
                 //     ),
-
+                const Text(
+                  'Please make sure you pick a date in order to confirm the date even if is today',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 16),
+                ),
                 DateTimePicker(
                   type: DateTimePickerType.date,
                   dateMask: 'd MMM, yyyy',
-                  initialValue: DateTime.now().toString(),
+                  // initialValue: DateTime.now().toString(),
                   firstDate: DateTime(2000),
                   lastDate: DateTime(2100),
                   icon: const Icon(Icons.event),

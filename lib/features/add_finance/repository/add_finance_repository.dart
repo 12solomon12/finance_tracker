@@ -33,12 +33,12 @@ class AddFinanceRepository {
         createdAt: date,
         notes: notes,
       );
-      await firestore.collection('users').doc(auth.currentUser!.uid).get();
-      final newBudget = {'budget': price};
-      await firestore
-          .collection('users')
-          .doc(auth.currentUser!.uid)
-          .update(newBudget);
+      // await firestore.collection('users').doc(auth.currentUser!.uid).get();
+      // final newBudget = {'budget': price};
+      // await firestore
+      //     .collection('users')
+      //     .doc(auth.currentUser!.uid)
+      //     .update(newBudget);
       final transaction = await firestore
           .collection('transactions')
           .doc(id)

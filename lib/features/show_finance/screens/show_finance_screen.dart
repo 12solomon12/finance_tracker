@@ -35,11 +35,12 @@ class _ShowFinanceScreenState extends ConsumerState<ShowFinanceScreen>
     Navigator.pushNamed(context, ProfileScreen.routeName);
   }
 
-  // setBudgetMoney() {
-  //   ref
-  //       .read(showFinanceControllerProvider.notifier)
-  //       .setBudget(context, int.parse(budgetController.text.toString()));
-  // }
+  setBudgetMoney() {
+    ref
+        .read(showFinanceControllerProvider.notifier)
+        .setBudget(context, int.parse(budgetController.text.toString()));
+    setState(() {});
+  }
 
   setBudget() {
     final isLoading = ref.watch(showFinanceControllerProvider);
@@ -64,27 +65,27 @@ class _ShowFinanceScreenState extends ConsumerState<ShowFinanceScreen>
                     labelText: 'Enter Budget',
                     controller: budgetController,
                   ),
-                  const Text(
-                    'Set duration of Budget',
-                    style: TextStyle(
-                      fontSize: 15,
-                    ),
-                  ),
-                  Slider(
-                    divisions: 100,
-                    min: 100,
-                    max: 900,
-                    activeColor: Colors.blue[value ?? 100],
-                    inactiveColor: Colors.red,
-                    // label: '$value',
-                    value: (value ?? 100).toDouble(),
-                    onChanged: (val) {
-                      setState(() {
-                        value = val.round();
-                      });
-                    },
-                  ),
-                  Checkbox(value: false, onChanged: (val) {}),
+                  // const Text(
+                  //   'Set duration of Budget',
+                  //   style: TextStyle(
+                  //     fontSize: 15,
+                  //   ),
+                  // ),
+                  // Slider(
+                  //   divisions: 100,
+                  //   min: 100,
+                  //   max: 900,
+                  //   activeColor: Colors.blue[value ?? 100],
+                  //   inactiveColor: Colors.red,
+                  //   // label: '$value',
+                  //   value: (value ?? 100).toDouble(),
+                  //   onChanged: (val) {
+                  //     setState(() {
+                  //       value = val.round();
+                  //     });
+                  //   },
+                  // ),
+                  //   Checkbox(value: false, onChanged: (val) {}),
                   // const SizedBox(height: 00),
                   Expanded(
                     child: Column(
@@ -92,7 +93,7 @@ class _ShowFinanceScreenState extends ConsumerState<ShowFinanceScreen>
                       children: [
                         CustomButton(
                           onPressed: () {
-                            //  setBudgetMoney();
+                            setBudgetMoney();
                           },
                           color: Pallete.blueColor,
                           child: isLoading
@@ -113,6 +114,7 @@ class _ShowFinanceScreenState extends ConsumerState<ShowFinanceScreen>
 
   @override
   Widget build(BuildContext context) {
+    final int? budget = ref.watch(budgetProvider);
     return Scaffold(
       drawer: const Drawer(),
       body: Padding(
@@ -169,29 +171,22 @@ class _ShowFinanceScreenState extends ConsumerState<ShowFinanceScreen>
                   //   );
                   // }),
                   const SizedBox(height: 10),
-                  ref.read(budgetCostProvider).when(data: (data) {
-                    return InkWell(
-                      onTap: setBudget,
-                      child: Text(
-                        '\$${data.toString()}',
-                        style: const TextStyle(
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
-                          color: Pallete.whiteColor,
-                        ),
+                  InkWell(
+                    onTap: setBudget,
+                    child: Text(
+                      '\$ $budget' ?? 'Budget not set',
+                      style: const TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Pallete.whiteColor,
                       ),
-                    );
-                  }, error: (error, trace) {
-                    return Center(
-                      child: Text(error.toString()),
-                    );
-                  }, loading: () {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }),
+                    ),
+                  ),
+                  // ref.read(budgetCostProvider).when(data: (data) {
+                  //   return
+                  // }),
                   const Text(
-                    'My Budget',
+                    'My Budget \nTap the \$ sign to set budget',
                     style: TextStyle(
                       fontSize: 20,
                       color: Pallete.whiteColor,
